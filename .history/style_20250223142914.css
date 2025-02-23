@@ -1,0 +1,6 @@
+#mainbox {
+ background-image: url('carrot/img/background.png');
+ background-size: contain;
+ width: 100vw;
+ height: 100%
+}

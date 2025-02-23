@@ -1,0 +1,1 @@
+const $modalBox = document.querySelector('')
