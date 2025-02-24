@@ -17,6 +17,41 @@ bgm.loop = true;
 bgm.volumn = 0.4;
 bgm.play();
 
+// document.addEventListener('click', () => {  
+//     $modalBox.showModal();
+//   }
+// );
+
+class GameState {
+  constructor(counter, carrots, bugs) {
+  this.status = "initial"; // initial, play, (pause), end--<timeout, lose, win>
+  this.counter = counter;
+  this.carrots = carrots;
+  this.bugs = bugs;
+  }
+  startGame(){
+    // this.status = "play"
+    //start counter
+    //making carrots
+    //making bugs
+
+  }
+  // pauseGame(){
+  //   // pause counter
+  // }
+  endGame(){
+    //check status
+    // if(this.sttus = timeout){
+    // } elseif(this.stauts-lose) {
+
+    // } else{};
+  }
+  resetGame(){
+
+  }
+}
+
+const game = new GameState(10, 15, 15);
 
 let counter = 10; 
 let carrotCounter;

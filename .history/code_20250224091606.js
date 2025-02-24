@@ -17,6 +17,10 @@ bgm.loop = true;
 bgm.volumn = 0.4;
 bgm.play();
 
+// document.addEventListener('click', () => {  
+//     $modalBox.showModal();
+//   }
+// );
 
 let counter = 10; 
 let carrotCounter;
@@ -25,7 +29,7 @@ let timecounter;
 let timeout;
 
 function startCounter(){
-  timecounter = setInterval(()=>{
+ setInterval(()=>{
     $timer.innerText = `00 : ${counter}`;
     console.log(counter);
     counter = counter-1;  

@@ -18,6 +18,7 @@ bgm.volumn = 0.4;
 bgm.play();
 
 
+
 let counter = 10; 
 let carrotCounter;
 let bugCounter = 6;

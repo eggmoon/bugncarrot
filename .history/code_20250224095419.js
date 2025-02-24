@@ -17,6 +17,19 @@ bgm.loop = true;
 bgm.volumn = 0.4;
 bgm.play();
 
+// document.addEventListener('click', () => {  
+//     $modalBox.showModal();
+//   }
+// );
+
+const gameState = {
+  status: initial, // initial, play, p
+  counter : 10, 
+  carrotCounter ,
+  bugCounter : 6,
+  timecounter,
+  timeout
+}
 
 let counter = 10; 
 let carrotCounter;

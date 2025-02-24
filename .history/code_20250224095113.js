@@ -17,6 +17,11 @@ bgm.loop = true;
 bgm.volumn = 0.4;
 bgm.play();
 
+// document.addEventListener('click', () => {  
+//     $modalBox.showModal();
+//   }
+// );
+
 
 let counter = 10; 
 let carrotCounter;
