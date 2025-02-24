@@ -21,7 +21,6 @@ const carrot_pull = new Audio("carrot/sound/carrot_pull.mp3");
 
 class GameState {
   constructor(counter, carrotsnum, bugsnum) {
-  this.initialvalue = [counter, carrotsnum, bugsnum];
   this.status = "initial"; // initial, play, (pause), end--<timeout, lose, win>
   this.timecounter = 0;
   this.counter = counter;
@@ -36,7 +35,6 @@ class GameState {
     this.status = "play"
     //start counter
     this.timecounter = setInterval(()=>{
-      console.log(this.status);
       $timer.innerText = `00 : ${this.counter}`;
       console.log(this.counter);
       this.counter = this.counter-1;  
@@ -80,24 +78,21 @@ class GameState {
       $modalBox2.showModal();
       this.resetGame();
     } else if(this.stauts = 'lose'){
-      $modalBox2.showModal();
+      $modalBox.showModal();
       this.resetGame();
     } else{
-      $modalBox.showModal();
+      $modalBox2.showModal();
     };
   }
   resetGame(){
-    clearInterval(this.timecounter);
     $playground.innerText = "";
     this.status = "initial";
-    this.counter = this.initialvalue[0];
-    this.carrotsnum = this.initialvalue[1];
-    this.bugsnum = this.initialvalue[2];
+    this.counter = counter;
+    this.carrots = carrots;
+    this.bugs = bugs;
+ 
   }
 }
-
-
-
 
 class Item{
   constructor(){
@@ -155,21 +150,21 @@ class Bug extends Item {
   }
   setBug() {
     this.item.addEventListener('click', () => {
-      game.status = 'lose';
-      game.endGame(); 
+      this.status = 'lose';
+      GameState.endGame(); 
     })
 
   }
 }
 
-let game = new GameState(10, 15, 15);
 
+const game = new GameState(10, 15, 15);
 
 $playButton.addEventListener('click', () => {
   if(game.status = 'initial'){
     game.startGame();
     game.makeBugs();
-    game.makeCarrots(); 
+    game.makeCarrots();
   } else{
     game.resetGame();
   }

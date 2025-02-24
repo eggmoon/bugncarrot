@@ -21,7 +21,6 @@ const carrot_pull = new Audio("carrot/sound/carrot_pull.mp3");
 
 class GameState {
   constructor(counter, carrotsnum, bugsnum) {
-  this.initialvalue = [counter, carrotsnum, bugsnum];
   this.status = "initial"; // initial, play, (pause), end--<timeout, lose, win>
   this.timecounter = 0;
   this.counter = counter;
@@ -87,16 +86,16 @@ class GameState {
     };
   }
   resetGame(){
-    clearInterval(this.timecounter);
     $playground.innerText = "";
     this.status = "initial";
-    this.counter = this.initialvalue[0];
-    this.carrotsnum = this.initialvalue[1];
-    this.bugsnum = this.initialvalue[2];
+    this.counter = counter;
+    this.carrots = carrots;
+    this.bugs = bugs;
+    clearInterval(this.timeCounter);
   }
 }
 
-
+const game = new GameState(10, 15, 15);
 
 
 class Item{
@@ -162,7 +161,7 @@ class Bug extends Item {
   }
 }
 
-let game = new GameState(10, 15, 15);
+
 
 
 $playButton.addEventListener('click', () => {

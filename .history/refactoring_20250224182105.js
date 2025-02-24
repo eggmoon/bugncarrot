@@ -21,7 +21,6 @@ const carrot_pull = new Audio("carrot/sound/carrot_pull.mp3");
 
 class GameState {
   constructor(counter, carrotsnum, bugsnum) {
-  this.initialvalue = [counter, carrotsnum, bugsnum];
   this.status = "initial"; // initial, play, (pause), end--<timeout, lose, win>
   this.timecounter = 0;
   this.counter = counter;
@@ -36,7 +35,6 @@ class GameState {
     this.status = "play"
     //start counter
     this.timecounter = setInterval(()=>{
-      console.log(this.status);
       $timer.innerText = `00 : ${this.counter}`;
       console.log(this.counter);
       this.counter = this.counter-1;  
@@ -52,7 +50,14 @@ class GameState {
       for(let i=this.carrotsnum; i >0; i--){
         const carrot = new Carrot();
         carrot.makeItem(i);
-        carrot.setCarrot();
+        carrot.addEventListener('click',()=>{
+          this.carrotsum -= 1;
+          $carrotCounter.innerText = this.carrotsum;
+          if(carrotCounter === 0){
+            this.status = 'timeout';
+            this.endGame();
+          };
+        });
         carrots.push(carrot);
       }
     }
@@ -60,12 +65,15 @@ class GameState {
     makeBugs(){
       let bugs = [];
       for(let i=this.bugsnum; i >0; i--){
-        const bug = new Bug();
+        const bug = new Bug()
         bug.makeItem(i);
-        bug.setBug();
+        const bugtarget=document.querySelector(`${this.name}${i}`);
         console.log(bug);
+        // bugtarget.addEventListener('click',()=>{
+        //   this.status = 'lose';
+        //   this.endGame();
+        // });
         bugs.push(bug);
-        console.log(bugs);
       }
     }
   
@@ -77,41 +85,33 @@ class GameState {
   endGame(){
     //check status
     if(this.status = 'timeout'){
-      $modalBox2.showModal();
+      $modalBox.showModal();
       this.resetGame();
     } else if(this.stauts = 'lose'){
-      $modalBox2.showModal();
+      $modalBox.showModal();
       this.resetGame();
     } else{
-      $modalBox.showModal();
+      $modalBox2.showModal();
     };
   }
   resetGame(){
-    clearInterval(this.timecounter);
     $playground.innerText = "";
     this.status = "initial";
-    this.counter = this.initialvalue[0];
-    this.carrotsnum = this.initialvalue[1];
-    this.bugsnum = this.initialvalue[2];
+    this.counter = counter;
+    this.carrots = carrots;
+    this.bugs = bugs;
+ 
   }
 }
-
-
-
 
 class Item{
   constructor(){
     this.img = 'noimg';
     this.name = 'noname';
-
-    this.sound = 'nosound'
- 
-  }
-  makeItem(i){
     this.x = Math.random();
     this.y = Math.random();
     this.item = document.createElement('img');
-    this.item.setAttribute('id', `${this.name}${i}`);
+    this.sound = 'nosound'
     this.item.setAttribute('src', this.img);
     this.item.setAttribute('class', this.name);
     this.item.style.left = `${this.x*90}%`;
@@ -124,7 +124,11 @@ class Item{
       // this.endGame(); 
     })
   }
-  getXY(){ 
+  getX?U(i){
+   
+    this.item.setAttribute('id', `${this.name}${i}`);
+  
+    
     return [this.item.style.left, this.item.style.top];
   }
    
@@ -134,13 +138,11 @@ class Carrot extends Item {
   constructor(){
     super();
     this.img = "carrot/img/carrot.png";
-    this.name = "carrot";
+    this.name = "Carrot";
     this.sound = "carrot/sound/carrot_pull.mp3"
   }
-  setCarrot() {
-    this.item.addEventListener('click', () => {
-      this.counter -= 1;
-    })
+  carrotCounter() {
+
   }
   removeItem(){
 
@@ -150,26 +152,22 @@ class Bug extends Item {
   constructor(){
     super();
     this.img = "carrot/img/bug.png";
-    this.name = "bug";
+    this.name = "Bug";
     this.sound = "carrot/sound/bug_pull.mp3";
   }
-  setBug() {
-    this.item.addEventListener('click', () => {
-      game.status = 'lose';
-      game.endGame(); 
-    })
+  resetGame() {
 
   }
 }
 
-let game = new GameState(10, 15, 15);
 
+const game = new GameState(10, 15, 15);
 
 $playButton.addEventListener('click', () => {
   if(game.status = 'initial'){
     game.startGame();
     game.makeBugs();
-    game.makeCarrots(); 
+    game.makeCarrots();
   } else{
     game.resetGame();
   }

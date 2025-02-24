@@ -87,12 +87,12 @@ class GameState {
     };
   }
   resetGame(){
-    clearInterval(this.timecounter);
     $playground.innerText = "";
     this.status = "initial";
-    this.counter = this.initialvalue[0];
-    this.carrotsnum = this.initialvalue[1];
-    this.bugsnum = this.initialvalue[2];
+    this.counter = initialvalue[0];
+    this.carrotsnum = initialvalue[1];
+    this.bugsnum = initialvalue[2;
+    clearInterval(this.timecounter);
   }
 }
 
