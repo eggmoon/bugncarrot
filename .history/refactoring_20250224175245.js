@@ -124,10 +124,8 @@ class Item{
     $playground.appendChild(this.item);
     this.item.addEventListener('click', () => {
       this.item.remove();
-      this.sound.play();
-      // this.status = 'lose';
-      // this.endGame(); 
-    })
+      this.sound.play() this.status = 'lose';
+          this.endGame();    })
     return [this.item.style.left, this.item.style.top];
   }
    

@@ -66,13 +66,13 @@ class GameState {
       let bugs = [];
       for(let i=this.bugsnum; i >0; i--){
         const bug = new Bug()
+        document.querySelector('')
         bug.makeItem(i);
-        const bugtarget=document.querySelector(`${this.name}${i}`);
         console.log(bug);
-        // bugtarget.addEventListener('click',()=>{
-        //   this.status = 'lose';
-        //   this.endGame();
-        // });
+        bug.addEventListener('click',()=>{
+          this.status = 'lose';
+          this.endGame();
+        });
         bugs.push(bug);
       }
     }
@@ -125,8 +125,7 @@ class Item{
     this.item.addEventListener('click', () => {
       this.item.remove();
       this.sound.play();
-      // this.status = 'lose';
-      // this.endGame(); 
+      
     })
     return [this.item.style.left, this.item.style.top];
   }

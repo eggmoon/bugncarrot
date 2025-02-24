@@ -13,9 +13,9 @@ const bug_pull = new Audio("carrot/sound/bug_pull.mp3");
 const game_win = new Audio("carrot/sound/game_win.mp3");
 const carrot_pull = new Audio("carrot/sound/carrot_pull.mp3");
 
-// bgm.loop = true;
-// bgm.volumn = 0.4;
-// bgm.play();
+bgm.loop = true;
+bgm.volumn = 0.4;
+bgm.play();
 
 
 
@@ -28,19 +28,17 @@ class GameState {
   this.bugsnum = bugsnum;
   this.stage = 1;
   }
-  status(){
-    return this.status;
-  }
+
   startGame(){
     this.status = "play"
     //start counter
     this.timecounter = setInterval(()=>{
-      $timer.innerText = `00 : ${this.counter}`;
-      console.log(this.counter);
-      this.counter = this.counter-1;  
-      if (this.counter < 0){
+      $timer.innerText = `00 : ${counter}`;
+      console.log(counter);
+      counter = counter-1;  
+      if (counter < 0){
         alert.play();
-        clearInterval(this.timecounter);
+        clearInterval(timecounter);
         this.status = 'timeout';
         this.endGame();
       }}, 1000)}
@@ -48,9 +46,8 @@ class GameState {
     makeCarrots(){
       let carrots = [];
       for(let i=this.carrotsnum; i >0; i--){
-        const carrot = new Carrot();
-        carrot.makeItem(i);
-        carrot.addEventListener('click',()=>{
+        carrots.push(new Carrot());
+        carrots[i].addEventListener('click',()=>{
           this.carrotsum -= 1;
           $carrotCounter.innerText = this.carrotsum;
           if(carrotCounter === 0){
@@ -58,22 +55,17 @@ class GameState {
             this.endGame();
           };
         });
-        carrots.push(carrot);
       }
     }
     // makingbugs
     makeBugs(){
       let bugs = [];
       for(let i=this.bugsnum; i >0; i--){
-        const bug = new Bug()
-        bug.makeItem(i);
-        const bugtarget=document.querySelector(`${this.name}${i}`);
-        console.log(bug);
-        // bugtarget.addEventListener('click',()=>{
-        //   this.status = 'lose';
-        //   this.endGame();
-        // });
-        bugs.push(bug);
+        bugs.push(new Bug());
+        bugs[i].addEventListener('click',()=>{
+          this.status = 'lose';
+          this.endGame();
+        });
       }
     }
   
@@ -104,6 +96,11 @@ class GameState {
   }
 }
 
+const game = new GameState();
+
+
+
+
 class Item{
   constructor(){
     this.img = 'noimg';
@@ -113,20 +110,17 @@ class Item{
     this.item = document.createElement('img');
     this.sound = 'nosound'
   }
-  makeItem(i){
-    this.x = Math.random();
-    this.y = Math.random();
+  makeItem(i, j){
     this.item.setAttribute('src', this.img);
     this.item.setAttribute('class', this.name);
-    this.item.setAttribute('id', `${this.name}${i}`);
-    this.item.style.left = `${this.x*90}%`;
-    this.item.style.top = `${this.y*90}%`;
+    this.item.setAttribute('id', `${this.name}${j}`);
+    this.item.style.left = `${i[0]*90}%`;
+    this.item.style.top = `${i[1]*90}%`;
     $playground.appendChild(this.item);
     this.item.addEventListener('click', () => {
       this.item.remove();
       this.sound.play();
-      // this.status = 'lose';
-      // this.endGame(); 
+      
     })
     return [this.item.style.left, this.item.style.top];
   }
@@ -138,7 +132,6 @@ class Carrot extends Item {
     super();
     this.img = "carrot/img/carrot.png";
     this.name = "Carrot";
-    this.sound = "carrot/sound/carrot_pull.mp3"
   }
   carrotCounter() {
 
@@ -150,28 +143,10 @@ class Carrot extends Item {
 class Bug extends Item {
   constructor(){
     super();
-    this.img = "carrot/img/bug.png";
+    this.img = "";
     this.name = "Bug";
-    this.sound = "carrot/sound/bug_pull.mp3";
   }
   resetGame() {
 
   }
 }
-
-
-const game = new GameState(10, 15, 15);
-
-$playButton.addEventListener('click', () => {
-  if(game.status = 'initial'){
-    game.startGame();
-    game.makeBugs();
-    game.makeCarrots();
-  } else{
-    game.resetGame();
-  }
-})
-
-$playButton2.addEventListener('click', () =>{
-  game.resetGame();
-})

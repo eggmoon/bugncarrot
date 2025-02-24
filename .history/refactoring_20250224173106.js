@@ -49,7 +49,6 @@ class GameState {
       let carrots = [];
       for(let i=this.carrotsnum; i >0; i--){
         const carrot = new Carrot();
-        carrot.makeItem(i);
         carrot.addEventListener('click',()=>{
           this.carrotsum -= 1;
           $carrotCounter.innerText = this.carrotsum;
@@ -64,15 +63,12 @@ class GameState {
     // makingbugs
     makeBugs(){
       let bugs = [];
-      for(let i=this.bugsnum; i >0; i--){
-        const bug = new Bug()
-        bug.makeItem(i);
-        const bugtarget=document.querySelector(`${this.name}${i}`);
-        console.log(bug);
-        // bugtarget.addEventListener('click',()=>{
-        //   this.status = 'lose';
-        //   this.endGame();
-        // });
+      // for(let i=this.bugsnum; i >0; i--){
+      //   const bug = new Bug()
+      //   bug.addEventListener('click',()=>{
+      //     this.status = 'lose';
+      //     this.endGame();
+      //   });
         bugs.push(bug);
       }
     }
@@ -113,20 +109,17 @@ class Item{
     this.item = document.createElement('img');
     this.sound = 'nosound'
   }
-  makeItem(i){
-    this.x = Math.random();
-    this.y = Math.random();
+  makeItem(i, j){
     this.item.setAttribute('src', this.img);
     this.item.setAttribute('class', this.name);
-    this.item.setAttribute('id', `${this.name}${i}`);
-    this.item.style.left = `${this.x*90}%`;
-    this.item.style.top = `${this.y*90}%`;
+    this.item.setAttribute('id', `${this.name}${j}`);
+    this.item.style.left = `${i[0]*90}%`;
+    this.item.style.top = `${i[1]*90}%`;
     $playground.appendChild(this.item);
     this.item.addEventListener('click', () => {
       this.item.remove();
       this.sound.play();
-      // this.status = 'lose';
-      // this.endGame(); 
+      
     })
     return [this.item.style.left, this.item.style.top];
   }
